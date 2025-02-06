@@ -53,7 +53,7 @@ def get_fun_fact(n: str):
 @app.get ("/api/classify-number")
 async def classify_number(number: str = Query(..., description="The number to classify")):
 
-    if number.isalpha():
+    if not number.isdigit:
         return JSONResponse (
             status_code=400,
             content = {
@@ -63,6 +63,17 @@ async def classify_number(number: str = Query(..., description="The number to cl
         )
     
     number = int(number)
+
+    if number is None:
+        return JSONResponse (
+            status_code=400,
+            content = {
+                "number": number,
+                "error": True,
+                "message": "Please enter a valid integer"
+            }
+        )
+    
     result = {
         "number": number,
         "is_prime": is_prime(number),
