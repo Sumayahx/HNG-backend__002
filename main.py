@@ -25,6 +25,7 @@ def is_perfect(n: int) -> bool:
     return sum(i for i in range(1, n) if n % i == 0) == n
 
 def is_armstrong(n : int) -> bool:
+    n = str(abs(n))   
     digits = [int(d) for d in str(n)]
     power= len(digits)
     return sum(d ** power for d in digits) == n
@@ -37,6 +38,7 @@ def get_properties(n: int):
     return properties
 
 def get_digit_sum(n: int) -> int:
+    n = str(abs(n))
     return sum(int(d) for d in str(n))
 
 def get_fun_fact(n: str):
@@ -51,11 +53,11 @@ def get_fun_fact(n: str):
 @app.get ("/api/classify-number")
 async def classify_number(number: str = Query(..., description="The number to classify")):
 
-    if not number.isdigit():
+    if number.isalpha():
         return JSONResponse (
             status_code=400,
             content = {
-                "number": "alphabet",
+                "number": number,
                 "error": True
             }
         )
